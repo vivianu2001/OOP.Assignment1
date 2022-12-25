@@ -1,101 +1,142 @@
-package observer;
-
+import java.util.EmptyStackException;
 import java.util.Stack;
-/**
- * StringBuilder with undo support
- * java.lang.StringBuilder - class with modifier <b>final</b>,
- * so no inheritance, use delegation.
- */
-interface Action{
-    void undo();
+
+
+
+public class UndoableStringBuilder  {
+    private StringBuilder stringBuilder;
+    private Stack<String> undoValues;
+
+    public UndoableStringBuilder()
+{
+    stringBuilder =new StringBuilder();
+    undoValues= new Stack<String>();
 }
 
-class UndoableStringBuilder {
+    /***
+     *
+     * @return to string for stringBuilder
+     */
+    public String toString()
+{
 
+    return stringBuilder.toString();
+}
 
-    private StringBuilder stringBuilder; // delegate
-    /**
-     * Operations that are the reverse of those performed.
-     * That is, when append is called, it is placed on the stack
-     * "delete" operation. When calling undo() it
-     * will be executed.    */
-    private Stack<Action> actions = new Stack<>();
+    /***
+     * Appends the specified string to this character sequence also saving the string before
+     * the action.
+     * @param str given string
+     * @return String builder added str
+     */
+   public UndoableStringBuilder append(String str)
+{
+    undoValues.push(stringBuilder.toString());
+    stringBuilder.append(str);
+    return this;
+}
 
-    // constructor
-    public UndoableStringBuilder() {
-        stringBuilder = new StringBuilder();
-    }
-
-    public UndoableStringBuilder reverse() {
-        stringBuilder.reverse();
-        Action action = new Action(){
-            public void undo() {
-                stringBuilder.reverse();
-            }
-        };
-        actions.add(action);
-        return this;
-    }
-
-    public UndoableStringBuilder append(String str) {
-        stringBuilder.append(str);
-
-        Action action = new Action(){
-            public void undo() {
-                stringBuilder.delete(
-                        stringBuilder.length() - str.length(),
-                        stringBuilder.length());
-            }
-        };
-        actions.add(action);
-        return this;
-    }
-
-    public UndoableStringBuilder insert(int offset, String str) {
-        stringBuilder.insert(offset, str);
-        Action action = new Action(){
-            public void undo() {
-                stringBuilder.delete(offset, offset+str.length());
-            }
-        };
-        actions.add(action);
-        return this;
-    }
-
-    public UndoableStringBuilder delete(int start, int end) {
-        String deleted = stringBuilder.substring(start, end);
-        stringBuilder.delete(start, end);
-        Action action = new Action(){
-            public void undo() {
-                stringBuilder.insert(start, deleted);
-            }
-        };
-        actions.add(action);
-        return this;
-    }
-
-    public UndoableStringBuilder replace(int start, int end, String str) {
-        String deleted = stringBuilder.substring(start, end);
-        stringBuilder.replace(start, end, str);
-        Action action = new Action(){
-            public void undo() {
-                stringBuilder.replace(start, start+str.length(), deleted);
-            }
-        };
-        actions.add(action);
-        return this;
-    }
-
-    public void undo(){
-        if(!actions.isEmpty()){
-            actions.pop().undo();
+    /***
+     * Removes the characters in a substring of this sequence. The substring begins at the specified start and extends to the character at index
+     * end - 1 or to the end of the sequence if no such character exists.
+     * If start is equal to end, no changes are made.
+     *
+     * @param start the start index of deletion
+     * @param end the end index of deletion
+     * @return the string  after deletion
+     * save the string before the deletion for the undo.
+     */
+    public UndoableStringBuilder delete(int start, int end)
+    {
+        undoValues.push(stringBuilder.toString());
+        try {
+            stringBuilder.delete(start, end);
+            return this;
         }
+        catch (StringIndexOutOfBoundsException e)
+        {
+            System.out.println("Index out of bounds has happend");
+            undoValues.pop();
+            return this;
+        }
+
     }
 
-    public String toString() {
+    /***
+     * Inserts the string into this character sequence
+     * @param offset the char in index offset replaced by str
+     * @param str the char in index offset replaced by str
+     *   saving current string in undoValues ,before the action.
+     * @return  Inserts the string into this character sequence
+     */
+    public UndoableStringBuilder insert(int offset, String str)
+    {
+        undoValues.push(stringBuilder.toString());
+        try {
+            stringBuilder.insert(offset,str);
+            return this;
+        }
+        catch (StringIndexOutOfBoundsException e)
+        {
+            System.out.println("Index out of bounds has happend");
+            undoValues.pop();
+            return this ;
+        }
 
-        return stringBuilder.toString();
     }
+
+    /***
+     *Replaces the characters in a substring of this sequence with characters in the specified String. The substring begins at the specified start and extends to the character at index end - 1 or to the end of the sequence if no such character exists. First the characters in the substring are removed and then the specified String is inserted at start
+     (This sequence will be lengthened to accommodate the specified String if necessary).
+     * @param start replace from index start
+     * @param end replace to index end
+     * @param str replace by str
+     * @return Replaces the characters in a substring of this sequence with characters in the specified String.
+     */
+    public UndoableStringBuilder replace(int start, int end, String str) {
+        undoValues.push(stringBuilder.toString());
+        try {
+            stringBuilder.replace(start, end, str);
+            return this;
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Index out of bounds has happend");
+            undoValues.pop();
+            return this;
+        }
+
+    }
+    /***
+     * Causes this character
+      sequence to be replaced by the reverse of the sequence.
+     * saving current string in undoValues ,before the action
+     * @return  sequence replaced by the reverse of the sequence
+     */
+    public UndoableStringBuilder reverse ()
+{
+    undoValues.push(stringBuilder.toString());
+    stringBuilder.reverse();
+    return this;
+}
+
+    /***
+     * delete the last action on our string
+     * when no undo occurs do nothing
+     */
+    public  void  undo()
+{
+    try
+    {
+        String undoValue= undoValues.pop();
+        stringBuilder= new StringBuilder(undoValue);
+
+    }
+    catch (EmptyStackException e)
+    {
+
+    }
+
+}
+
 
 
 }
