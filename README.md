@@ -1,8 +1,8 @@
-### OOP.Assignment
+# OOP.Assignment
 This project contains a framework that provides an implementation of the Observer design pattern 
 for update members who register to the Group admin's UndoableStringBuilder.
 
-##About observer pattern
+#About observer pattern
 Observer is a behavioral design pattern. It specifies communication between objects: observable and observers.
 An observable is an object which notifies observers about the changes in its state.
 
