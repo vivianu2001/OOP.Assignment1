@@ -3,7 +3,7 @@ package observer;
 import org.openjdk.jol.info.GraphLayout;
 
 
-/**
+/*ד
  * Utility class for tracking the Java Virtual Machine (JVM) resources allocated
  * by the Operating System
  */

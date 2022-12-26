@@ -11,20 +11,31 @@ public class Tests {
     public static final Logger logger = LoggerFactory.getLogger(Tests.class);
     // stub method to check external dependencies compatibility
     @Test
-    public void test(){
-        UndoableStringBuilder s1 = new UndoableStringBuilder();
-        UndoableStringBuilder s2 = new UndoableStringBuilder();
+    public void testJvm(){
 
-        s1.append("I LOVE JAVA");
-        s2.append("I LOVE OBSERVER");
+        Sender groupAdmin=new GroupAdmin();
 
-        logger.info(()->JvmUtilities.objectFootprint(s1));
+        logger.info(()->"Footprint after Initialization: "+JvmUtilities.objectFootprint(groupAdmin));
 
-        logger.info(()->JvmUtilities.objectFootprint(s1,s2));
+        Member member1=new ConcreteMember();
+        Member member2=new ConcreteMember();
+        Member member3=new ConcreteMember();
+        Member member4=new ConcreteMember();
 
-        logger.info(()->JvmUtilities.objectTotalSize(s1));
 
-        logger.info(() -> JvmUtilities.jvmInfo());
+
+        groupAdmin.register(member2);
+        groupAdmin.register(member3);
+        groupAdmin.register(member4);
+
+        logger.info(()->"Footprint after adding members to the list: "+JvmUtilities.objectFootprint(groupAdmin));
+
+        groupAdmin.append("Hello");
+        logger.info(()->"Footprint after append to the object: "+JvmUtilities.objectFootprint(groupAdmin));
+
+        logger.info(() -> " JVM INFO : "+JvmUtilities.jvmInfo());
+
+
     }
 
     @Test
@@ -118,15 +129,6 @@ public class Tests {
         Member member5=new ConcreteMember();
         groupAdmin.register(member5);
         assert (JvmUtilities.objectTotalSize(member5.toString()).equals(JvmUtilities.objectTotalSize("Happy Hanukkah")));
-
-
-
-
-
-
-
-
-
 
 
     }
