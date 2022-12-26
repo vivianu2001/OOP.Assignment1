@@ -14,7 +14,7 @@ UndoableStringBuilder class override methods of StringBuilder(delete,append,inse
 But also have the Method undo()- this method undo the last change we make in our UndoableStringBuilder.
 In this project the undo implementation depends on stack data structure,every change saves in the stack. when we need to undo we pop from the stack the last action.
 
-In this project Group admin implements the Interface Sender, and holds the observable- UndoableStringBuilde.Also,The Group admin holds a list of members that register to the Group admin.
+In this project GroupAdmin implements the Interface Sender, and holds the observable- UndoableStringBuilde.Also,The Group admin holds a list of members that register to the Group admin.
 
 The members are objects of ConcreteMember that implements Member interface. The members are the observers.
 Each change In UndoableStringBuilder of the Group admin needs to make update on the members.
@@ -23,6 +23,12 @@ Because this is a shallow copy each UndoableStringBuilder of member point to Und
 Each member register to the admin by adding to the list, every unregister remove the member from the list.
 
 The GroupAdmin class can make changes in his UndoableStringBuilder with the methods- append, insert,delete and undo. after each method we need to call updateAll() to update each members on the list with the newst changes.
+
+
+### 
+
+
+
 
 
 
