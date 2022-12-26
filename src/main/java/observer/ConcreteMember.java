@@ -5,16 +5,15 @@ public class ConcreteMember  implements Member{
 
 
     /***
-     * update the given usb by delete and append the newest one
-     (to avoid shallow copy)
-     * @param usb
+     * shallow copy of undoablestringbuilder from the group admin
+     * @param usb the stringBuilder of Group admin
      */
     @Override
 
     public void update(UndoableStringBuilder usb) {
 
-        this.undoableStringBuilder.delete(0,undoableStringBuilder.toString().length());
-        this.undoableStringBuilder.append(usb.toString());
+        this.undoableStringBuilder=usb;
+
     }
 
     /***

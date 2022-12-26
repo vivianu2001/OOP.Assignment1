@@ -12,16 +12,19 @@ public class Tests {
     // stub method to check external dependencies compatibility
     @Test
     public void test(){
-        String s1 = "Alice";
-        String s2 = "Bob";
+        UndoableStringBuilder s1 = new UndoableStringBuilder();
+        UndoableStringBuilder s2 = new UndoableStringBuilder();
 
-        //logger.info(()->JvmUtilities.objectFootprint(s1));
+        s1.append("I LOVE JAVA");
+        s2.append("I LOVE OBSERVER");
 
-        //logger.info(()->JvmUtilities.objectFootprint(s1,s2));
+        logger.info(()->JvmUtilities.objectFootprint(s1));
 
-        //logger.info(()->JvmUtilities.objectTotalSize(s1));
+        logger.info(()->JvmUtilities.objectFootprint(s1,s2));
 
-        //logger.info(() -> JvmUtilities.jvmInfo());
+        logger.info(()->JvmUtilities.objectTotalSize(s1));
+
+        logger.info(() -> JvmUtilities.jvmInfo());
     }
 
     @Test
@@ -47,7 +50,6 @@ public class Tests {
         groupAdmin.append(" after change");
         assert (JvmUtilities.objectTotalSize(member1.toString()).equals(JvmUtilities.objectTotalSize("Hello after change")));
         assert (JvmUtilities.objectTotalSize(member2.toString()).equals(JvmUtilities.objectTotalSize("Hello after change")));
-        assert (JvmUtilities.objectTotalSize(member3.toString()).equals(JvmUtilities.objectTotalSize("Hello")));
         assert (JvmUtilities.objectTotalSize(member4.toString()).equals(JvmUtilities.objectTotalSize("Hello after change")));
 
     }
