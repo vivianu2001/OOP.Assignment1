@@ -30,7 +30,7 @@ UndoableStringBuilder of the member saves by reference from GroupAdmin UndoableS
 
 Class Tests:
 
--testJvm
+- testJvm
 This test is preforming JvmUtilities- Utility class for tracking the Java Virtual Machine (JVM) resources allocated by the Operating System.
 For this test we using logger messages to print total memory of the object GroupAdmin.
 First,checking the objectFootprint- Shallow and deep size footprint of the object/objects
@@ -40,7 +40,7 @@ Also printing JVM-info
 JVM's process id, total memory allocated at the beginning of the program as well as the available number of cores.
 
 
--deleteMember
+- deleteMember
 This test check the unregistered method. Because of the shallow copy the request was just delete the member from the list. 
 After the register to all members, and the append to groupAdmin we check with objectTotalSize-
 computes the total (deep) size of the given object.
@@ -48,10 +48,10 @@ Using toString compare the tostring of each member and the tostring of groupadmi
 For each member of the list the total size must be equal . also after the second append.
 
 
--updateMembers_undo
+- updateMembers_undo
 Test for checking  that our undo operation  works on the gropadmin and the members also by objectTotalSize.
 
--test3
+- test3
 Test for checking other operations on the UndoableStringBuilder of group admin.
 
 
