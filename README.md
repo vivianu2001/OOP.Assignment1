@@ -19,9 +19,9 @@ In this project the undo implementation depends on stack data structure,every ch
 
 Class GroupAdmin:
 In this project GroupAdmin implements the Interface Sender, and holds the observable- UndoableStringBuilder.Also,The Group admin holds a list of members that register to the Group admin.
-- The register method add new ConcreteMember object to the list.
+- The register method add new Member object to the list.
 - The register method remove the given member from the list.
-- delete,undo,insert and append methods are override from the interface Sender,to change the Group admin UndoableStringBuilder
+- delete,undo,insert and append methods are implemented for the  interface Sender ,to change the Group admin UndoableStringBuilder
 after every operation we update all our members in current list with our changed UndoableStringBuilder.
 - toString method for the tests.
 
